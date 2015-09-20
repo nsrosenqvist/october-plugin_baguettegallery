@@ -1,0 +1,50 @@
+.baguette-layout_default a {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    display: block;
+    margin: 5px;
+    border: 5px solid;
+    float: left;
+    background-color: #f1f1f1;
+    background-color: rgba(127,127,127,0.1);
+    border-color: transparent;
+}
+.baguette-layout_default a:hover,
+.baguette-layout_default a:focus {
+    background-color: #e4e4e4;
+    background-color: rgba(127,127,127,0.2);
+}
+.baguette-layout_default a:active,
+.baguette-layout_default a.active {
+    background-color: #d8d8d8;
+    background-color: rgba(127,127,127,0.3);
+}
+.baguette-layout_default a > img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+.baguette-clearfix:before,
+.baguette-clearfix:after {
+  content: "";
+  display: table;
+}
+
+.baguette-clearfix:after {
+  clear: both;
+}
+
+.baguette-clearfix {
+  zoom: 1; /* ie 6/7 */
+}
