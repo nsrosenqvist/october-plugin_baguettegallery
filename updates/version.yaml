@@ -1,2 +1,4 @@
 1.0.0:
-    First version
+    - First version
+1.1.0:
+    - Improved markdown markup, now you can set captions on every image in a gallery

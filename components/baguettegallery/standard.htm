@@ -1,5 +1,9 @@
 <div class="{{ class }} baguette-layout_default baguette-clearfix">
-    {% for image in images %}
-        {{ baguette_gallery_thumb(image, image.thumb(200,200)) }}
+    {% for item in images %}
+        {% if item.type == 'file' %}
+            {{ baguette_gallery_thumb(item.image, item.image.thumb(200,200), item.caption) }}
+        {% else %}
+            {{ baguette_gallery_thumb(item.path, false, item.caption) }}
+        {% endif %}
     {% endfor %}
 </div>

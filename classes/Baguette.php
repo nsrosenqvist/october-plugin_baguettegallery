@@ -8,6 +8,7 @@ use Cms\Classes\Partial;
 use Cms\Classes\Theme;
 use Config;
 use App;
+use NSRosenqvist\BaguetteGallery\Classes\BaguetteImage;
 
 class Baguette {
 
@@ -19,6 +20,9 @@ class Baguette {
 
     public static function getResponsiveAttributes($image)
     {
+        if ( ! is_a($image, 'System\Models\File'))
+            return "";
+
         $gallerySrcset = "";
 
         foreach (explode(', ', $image->getResponsiveSrcset()) as $src)
@@ -35,9 +39,11 @@ class Baguette {
         if (empty($class))
             $class = self::$defaultClass;
 
+        $image = new BaguetteImage($image, false, $caption);
+
         $html = '<div class="'.$class.'">';
-        $html .= self::getImageMarkup($image, $caption);
-        $html .= '</a></div>';
+        $html .= $image->getImageMarkup();
+        $html .= '</div>';
         return $html;
     }
 
@@ -46,17 +52,21 @@ class Baguette {
         if (empty($class))
             $class = self::$defaultClass;
 
+        $image = new BaguetteImage($image, $thumb, $caption);
+
         $html = '<div class="'.$class.'">';
-        $html .= self::getImageMarkup($image, $caption, $thumb);
-        $html .= '</a></div>';
+        $html .= $image->getImageMarkup();
+        $html .= '</div>';
         return $html;
     }
 
     public static function makeBaguetteGalleryThumb($image, $thumb, $caption = "")
     {
-        return self::getImageMarkup($image, $caption, $thumb);
+        $image = new BaguetteImage($image, $thumb, $caption);
+        return $image->getImageMarkup($image, $caption, $thumb);
     }
 
+    // Only used by the markdown extension, otherwise goes through component
     public static function makeBaguetteGallery($images, $layout = "", $class = "")
     {
         // Set component properties
@@ -68,8 +78,13 @@ class Baguette {
         $parameters = [
             'layout' => $layout,
             'class' => $class,
-            'images' => $images
+            'images' => []
         ];
+
+        foreach ($images as $key => $val)
+        {
+            $parameters['images'][$key] = new BaguetteImage($val, true);
+        }
 
         // Get twig runtime
         $twig = App::make('twig');
@@ -127,7 +142,7 @@ class Baguette {
         // Create anchor that opens baguette
         if (is_a($image, 'System\Models\File'))
         {
-            if (empty($caption))
+            if (empty($caption) && $caption !== false)
             {
                 $caption = $image->title;
             }

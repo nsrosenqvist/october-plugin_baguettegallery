@@ -86,12 +86,11 @@ class Hooks {
             $parameters = self::processParameters($value['parameters']);
 
             // Set parameters
-            $caption = ( ! isset($parameters['caption'])) ? "" : $parameters['caption'];
             $class = ( ! isset($parameters['class'])) ? Baguette::$defaultClass : $parameters['class'];
 
             // Insert image
             if (count($image) > 0)
-                $text = str_replace($key, Baguette::makeBaguette($image[0], $caption, $class), $text);
+                $text = str_replace($key, Baguette::makeBaguette($image[0]['path'], $image[0]['caption'], $class), $text);
             else
                 $text = str_replace($key, $value['original'], $text);
         }
@@ -102,13 +101,26 @@ class Hooks {
     protected static function processTagContent($content)
     {
         $images = [];
+        $final = [];
 
         // Extract image URLs
-        if (preg_match_all('@\]\('.'(.*?)'.'\)@s', $content, $matches)) {
-            $images = $matches[1];
+        if (preg_match_all('@\!\['.'(.*?)'.'\]\('.'(.*?)'.'\)@s', $content, $matches)) {
+            $images = [
+                'caption' => $matches[1],
+                'path' => $matches[2]
+            ];
         }
 
-        return $images;
+        // Merge the results into one array
+        foreach ($images['caption'] as $key => $val)
+        {
+            $final[] = [
+                'caption' => $images['caption'][$key],
+                'path' => $images['path'][$key]
+            ];
+        }
+
+        return $final;
     }
 
     protected static function processParameters($parameters)

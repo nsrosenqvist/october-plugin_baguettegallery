@@ -17,6 +17,8 @@ captions = false
 {% component 'featuredGallery' images=post.featured_images %}
 
 {{ baguette(post.featured_images.first, "A single image", "featured_images") }}
+
+{{ baguette_thumb(post.featured_images.first, post.featured_images.first.thumb(200,200), "A single image with a set thumbnail", "featured_images") }}
 ```
 
 # Component properties

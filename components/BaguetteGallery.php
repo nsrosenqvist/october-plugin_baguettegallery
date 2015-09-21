@@ -1,6 +1,7 @@
 <?php namespace NSRosenqvist\BaguetteGallery\Components;
 
 use NSRosenqvist\BaguetteGallery\Classes\Baguette;
+use NSRosenqvist\BaguetteGallery\Classes\BaguetteImage;
 use Block;
 
 class BaguetteGallery extends \Cms\Classes\ComponentBase
@@ -112,7 +113,19 @@ class BaguetteGallery extends \Cms\Classes\ComponentBase
     {
         $this->page['class'] = $this->property('class');
         $this->page['layout'] = $this->property('layout');
-        $this->page['images'] = $this->property('images');
+        $images = [];
+
+
+
+        foreach ($this->property('images') as $image)
+        {
+            if ( ! is_a($image, 'NSRosenqvist\BaguetteGallery\Classes\BaguetteImage'))
+                $images[] = new BaguetteImage($image, false, true);
+            else
+                $images[] = $image;
+        }
+
+        $this->page['images'] = $images;
     }
 
     public static function initialize($class)

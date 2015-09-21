@@ -12,14 +12,22 @@ All you need to do is wrap the image links with `[baguette-gallery] ...images.. 
 and it insert the images in the default gallery layout. You can also set individual
 images to be opened by baguette by using the `[baguette]...[/baguette]` tags.
 
-The attributes *"layout"*, *"caption"* and *"class"* can be set on the baguette tags.
-*Layout* is for the gallery only and it sets what layout to use. This can be one of
-the shipped layouts: "standard" and "square", or a theme defined layout. *Caption*
-is the text you want to show with your image and this only works for single images,
-not galleries. This can be a whole sentence if you wrap it with quotation marks.
-*Class* is if you want a specific instance configuration to be used when running
-baguette. This is for advanced users and more information is available in the
-documentation file.
+**Example:**
+```
+[baguette-gallery layout="square"]
+
+![](/storage/file/image2.jpg)
+![This is a caption](/storage/file/image.jpg)
+
+[/baguette]
+```
+
+The attributes *"layout"* and *"class"* can be set on the baguette tags. *Layout*
+is for the gallery only and it sets what layout to use. This can be one of the
+shipped layouts: "standard" and "square", or a theme defined layout. *Class* is
+if you want a specific instance configuration to be used when running baguette.
+This is for advanced users and more information is available in the documentation
+file.
 
 The component **baguetteGallery** has to be included in your layout/page somewhere
 for the plugin to function.
@@ -36,7 +44,7 @@ in your theme files.
 layout = square
 ==
 ==
-{% component 'baguetteGallery' images=post.featured_images %}
+{% component 'baguetteGallery' images=post.featured_images layout="square" %}
 ```
 
 For more advanced usage, see the documentation.
