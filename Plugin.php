@@ -52,6 +52,7 @@ class Plugin extends \System\Classes\PluginBase
 
             if (in_array(get_class($widget->model), $pages))
             {
+                // Add our gallery styles
                 $widget->getController()->addCss('/plugins/nsrosenqvist/baguettegallery/assets/css/gallery_layouts.css');
                 $theme = Theme::getActiveTheme();
 
