@@ -87,7 +87,7 @@ class Baguette {
         }
 
         // Get twig runtime
-        $twig = App::make('twig');
+        $twig = App::make('twig.environment');
         $partial = null;
         $result = "";
 
@@ -119,7 +119,7 @@ class Baguette {
         }
 
         // Render the component
-        if ( ! is_null($partial))
+        if ( ! is_null($partial) && ! empty($images))
         {
             $template = $twig->loadTemplate($partial->getFullPath());
             $result = $template->render($parameters);
