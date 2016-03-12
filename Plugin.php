@@ -8,7 +8,7 @@ use NSRosenqvist\BaguetteGallery\Classes\Hooks;
 
 class Plugin extends \System\Classes\PluginBase
 {
-    public $require = ['Bedard.Resimg'];
+    public $require = ['OFFLINE.ResponsiveImages'];
 
     public function pluginDetails()
     {
